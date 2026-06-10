@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
@@ -89,6 +90,20 @@ class _DesktopAppWrapperState extends BaseAppWrapperState<DesktopAppWrapper> wit
     final position = await windowManager.getPosition();
     ref.read(clientSettingsProvider.notifier).setWindowPosition(position);
     super.onWindowMoved();
+  }
+
+  @override
+  void onWindowFocus() {
+    // On Wayland, the initial setFullScreen call in setupFladderWindowChrome may be
+    // dropped because the XDG surface configure round-trip hasn't completed yet.
+    // By the time the window receives compositor focus the surface is fully configured,
+    // so we retry here for HTPC mode on Linux.
+    if (Platform.isLinux && ref.read(argumentsStateProvider).htpcMode) {
+      windowManager.isFullScreen().then((isFullScreen) {
+        if (!isFullScreen) windowManager.setFullScreen(true);
+      });
+    }
+    super.onWindowFocus();
   }
 
   @override
