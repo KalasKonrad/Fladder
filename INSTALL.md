@@ -71,6 +71,24 @@ You can download it using your favourite AUR helper.
 [Yay](https://github.com/Jguer/yay): `yay -S fladder-git`<br>
 [Paru](https://github.com/Morganamilo/paru): `paru -S fladder-git`
 
+#### Build from source (PKGBUILD)
+
+To build and install directly from this repository (e.g. to test unreleased features):
+
+1. Install build dependencies:
+   ```bash
+   sudo pacman -S fvm clang cmake ninja pkgconf jq
+   ```
+
+2. Clone, build and install:
+   ```bash
+   git clone -b develop https://github.com/KalasKonrad/Fladder.git
+   cd Fladder
+   makepkg -si
+   ```
+
+This installs as `fladder-dev` and can coexist with the AUR package.
+
 ### Fedora
 
 > [!TIP]
