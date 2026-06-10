@@ -684,7 +684,7 @@ class _VideoPlayerSettingsModel extends VideoPlayerSettingsModel
       this.enableCrossfade = true,
       this.crossfadeDurationMs = 400,
       final Set<AudioPassthroughCodec> passthroughCodecs =
-          const <AudioPassthroughCodec>{}}) 
+          const <AudioPassthroughCodec>{}})
       : _allowedOrientations = allowedOrientations,
         _segmentSkipSettings = segmentSkipSettings,
         _hotKeys = hotKeys,
@@ -802,7 +802,8 @@ class _VideoPlayerSettingsModel extends VideoPlayerSettingsModel
   @override
   @JsonKey()
   Set<AudioPassthroughCodec> get passthroughCodecs {
-    if (_passthroughCodecs is EqualUnmodifiableSetView) return _passthroughCodecs;
+    if (_passthroughCodecs is EqualUnmodifiableSetView)
+      return _passthroughCodecs;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableSetView(_passthroughCodecs);
   }
