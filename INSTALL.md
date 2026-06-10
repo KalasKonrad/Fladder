@@ -77,7 +77,7 @@ To build and install directly from this repository (e.g. to test unreleased feat
 
 1. Install build dependencies:
    ```bash
-   sudo pacman -S fvm clang cmake ninja pkgconf jq
+   sudo pacman -S fvm clang cmake ninja pkgconf
    ```
 
 2. Clone, build and install:

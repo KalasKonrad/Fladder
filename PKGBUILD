@@ -13,7 +13,7 @@ sha256sums=('SKIP')
 
 prepare() {
     cd "$srcdir/$pkgname"
-    fvm install "$(jq -r '.flutter' .fvmrc)"
+    fvm install 3.35.7
     fvm flutter pub get
 }
 
