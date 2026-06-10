@@ -1,3 +1,4 @@
+# shellcheck shell=bash disable=SC2034,SC2154,SC2164
 # Maintainer: KalasKonrad
 pkgname=fladder-dev
 pkgver=0.10.3
