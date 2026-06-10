@@ -74,10 +74,20 @@ Future<AppBootstrapResult> bootstrapApplication(List<String> args) async {
     platform: defaultTargetPlatform,
   );
 
+  var savedHtpcMode = false;
+  try {
+    final json = sharedPreferences.getString('clientSettings');
+    if (json != null) {
+      final decoded = jsonDecode(json) as Map<String, dynamic>;
+      savedHtpcMode = decoded['htpcMode'] as bool? ?? false;
+    }
+  } catch (_) {}
+
   final argumentsModel = ArgumentsModel.fromArguments(
     args,
     windowArguments,
     leanBackEnabled,
+    savedHtpcMode,
   );
 
   return AppBootstrapResult(

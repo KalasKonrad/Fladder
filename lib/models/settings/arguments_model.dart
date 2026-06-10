@@ -9,20 +9,27 @@ class NotificationKeys {
   static const String skipNotifications = '--skipNotifications';
   static const String newWindow = '--newWindow';
   static const String htpcMode = '--htpc';
+  static const String fullscreen = '--fullscreen';
 }
 
-@freezed
+@Freezed(copyWith: true)
 abstract class ArgumentsModel with _$ArgumentsModel {
   const ArgumentsModel._();
 
   factory ArgumentsModel({
     @Default(false) bool htpcMode,
     @Default(false) bool leanBackMode,
+    @Default(false) bool startFullscreen,
     @Default(false) bool newWindow,
     @Default(false) bool skipNotifications,
   }) = _ArgumentsModel;
 
-  factory ArgumentsModel.fromArguments(List<String> arguments, String windowArguments, bool leanBackEnabled) {
+  factory ArgumentsModel.fromArguments(
+    List<String> arguments,
+    String windowArguments,
+    bool leanBackEnabled, [
+    bool settingsHtpcMode = false,
+  ]) {
     arguments = arguments.map((e) => e.trim()).toList();
     leanBackMode = leanBackEnabled;
     final parsedWindowArgs = windowArguments.split(',');
@@ -30,8 +37,9 @@ abstract class ArgumentsModel with _$ArgumentsModel {
         parsedWindowArgs.contains(NotificationKeys.skipNotifications) ||
         parsedWindowArgs.contains(NotificationKeys.newWindow);
     return ArgumentsModel(
-      htpcMode: arguments.contains(NotificationKeys.htpcMode) || leanBackEnabled,
+      htpcMode: arguments.contains(NotificationKeys.htpcMode) || leanBackEnabled || settingsHtpcMode,
       leanBackMode: leanBackEnabled,
+      startFullscreen: arguments.contains(NotificationKeys.fullscreen),
       newWindow: parsedWindowArgs.contains(NotificationKeys.newWindow),
       skipNotifications: shouldSkipNotifications,
     );

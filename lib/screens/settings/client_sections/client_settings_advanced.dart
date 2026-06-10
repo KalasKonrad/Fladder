@@ -13,10 +13,23 @@ import 'package:fladder/util/localization_helper.dart';
 import 'package:fladder/util/option_dialogue.dart';
 
 List<Widget> buildClientSettingsAdvanced(BuildContext context, WidgetRef ref) {
+  final isDesktop = AdaptiveLayout.of(context).isDesktop;
   return settingsListGroup(
     context,
     SettingsLabelDivider(label: context.localized.advanced),
     [
+      if (isDesktop)
+        SettingsListTile(
+          label: Text(context.localized.htpcModeTitle),
+          subLabel: Text(context.localized.htpcModeDesc),
+          onTap: () => ref.read(clientSettingsProvider.notifier).setHtpcMode(
+                !ref.read(clientSettingsProvider.select((v) => v.htpcMode)),
+              ),
+          trailing: Switch(
+            value: ref.watch(clientSettingsProvider.select((v) => v.htpcMode)),
+            onChanged: (value) => ref.read(clientSettingsProvider.notifier).setHtpcMode(value),
+          ),
+        ),
       SettingsListTile(
         label: Text(context.localized.settingsLayoutSizesTitle),
         subLabel: Text(context.localized.settingsLayoutSizesDesc),

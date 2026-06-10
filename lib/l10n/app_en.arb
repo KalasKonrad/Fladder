@@ -1480,6 +1480,10 @@
     }
   },
   "copyStreamUrl": "Copy stream url",
+  "htpcModeTitle": "HTPC Mode",
+  "@htpcModeTitle": {},
+  "htpcModeDesc": "TV/lean-back interface: fullscreen, TV layout, remote-friendly navigation",
+  "@htpcModeDesc": {},
   "settingsLayoutSizesTitle": "Layout Sizes",
   "settingsLayoutSizesDesc": "Choose which layout sizes the app can use based on window size",
   "settingsLayoutModesTitle": "Layout Modes",

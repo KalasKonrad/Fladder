@@ -34,7 +34,7 @@ extension WindowHelperSetup on WindowManager {
         await windowManager.focus();
       }
 
-      if (startupArguments.htpcMode && !isFullScreen) {
+      if ((startupArguments.htpcMode || startupArguments.startFullscreen) && !isFullScreen) {
         await windowManager.setFullScreen(true);
       }
     }

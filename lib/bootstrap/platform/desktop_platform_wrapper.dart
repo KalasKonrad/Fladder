@@ -98,7 +98,8 @@ class _DesktopAppWrapperState extends BaseAppWrapperState<DesktopAppWrapper> wit
     // dropped because the XDG surface configure round-trip hasn't completed yet.
     // By the time the window receives compositor focus the surface is fully configured,
     // so we retry here for HTPC mode on Linux.
-    if (Platform.isLinux && ref.read(argumentsStateProvider).htpcMode) {
+    final args = ref.read(argumentsStateProvider);
+    if (Platform.isLinux && (args.htpcMode || args.startFullscreen)) {
       windowManager.isFullScreen().then((isFullScreen) {
         if (!isFullScreen) windowManager.setFullScreen(true);
       });
