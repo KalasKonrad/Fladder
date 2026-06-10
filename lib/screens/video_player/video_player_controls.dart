@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -186,7 +187,7 @@ class _DesktopControlsState extends ConsumerState<DesktopControls> {
                 const VideoPlayerBrightnessIndicator(),
                 const VideoPlayerSpeedIndicator(),
                 const VideoPlayerScreenshotIndicator(),
-                const VideoPlayerStatsOverlay(),
+                if (!kIsWeb && Platform.isLinux) const VideoPlayerStatsOverlay(),
                 Consumer(
                   builder: (context, ref, child) {
                     final position = ref.watch(mediaPlaybackProvider.select((value) => value.position));
@@ -1067,7 +1068,9 @@ class _DesktopControlsState extends ConsumerState<DesktopControls> {
         _toggleSubtitles();
         return true;
       case VideoHotKeys.toggleStats:
-        ref.read(showVideoStatsProvider.notifier).update((s) => !s);
+        if (!kIsWeb && Platform.isLinux) {
+          ref.read(showVideoStatsProvider.notifier).update((s) => !s);
+        }
         return true;
       case VideoHotKeys.seekForwardInstant:
         final seekForwardSeconds =
