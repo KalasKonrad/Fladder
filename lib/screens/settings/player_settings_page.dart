@@ -483,6 +483,47 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                 ],
               ),
               if (currentPlayer == PlayerOptions.libMPV) SettingsLabelDivider(label: context.localized.audio(1)),
+              if (currentPlayer == PlayerOptions.libMPV)
+                SettingsListTile(
+                  label: Text(context.localized.audioOutputDevice),
+                  trailing: Text(
+                    videoSettings.audioDevice ?? context.localized.defaultLabel,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  onTap: () async {
+                    final devices = await ref.read(videoPlayerProvider).getAudioDevices();
+                    if (!context.mounted) return;
+                    final picked = await showDialog<String>(
+                      context: context,
+                      builder: (context) => SimpleDialog(
+                        title: Text(context.localized.audioOutputDevice),
+                        children: [
+                          SimpleDialogOption(
+                            onPressed: () => Navigator.pop(context, ''),
+                            child: Text(context.localized.defaultLabel),
+                          ),
+                          ...devices.map(
+                            (d) => SimpleDialogOption(
+                              onPressed: () => Navigator.pop(context, d.name),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(d.description.isEmpty ? d.name : d.description),
+                                  if (d.description.isNotEmpty)
+                                    Text(d.name, style: Theme.of(context).textTheme.bodySmall),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                    if (picked == null) return;
+                    final name = picked.isEmpty ? null : picked;
+                    provider.setAudioDevice(name);
+                    await ref.read(videoPlayerProvider).setAudioDevice(name ?? 'auto');
+                  },
+                ),
               SettingsListTile(
                 label: Text(context.localized.playerSettingsReplayGainTitle),
                 subLabel: Text(context.localized.playerSettingsReplayGainDesc),

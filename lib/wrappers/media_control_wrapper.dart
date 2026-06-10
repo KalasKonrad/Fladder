@@ -534,6 +534,11 @@ class MediaControlsWrapper extends BaseAudioHandler implements VideoPlayerContro
   Future<int> setSubtitleTrack(SubStreamModel? model, PlaybackModel playbackModel) async =>
       await _player?.setSubtitleTrack(model, playbackModel) ?? -1;
 
+  Future<List<({String name, String description})>> getAudioDevices() async =>
+      await _player?.getAudioDevices() ?? [];
+
+  Future<void> setAudioDevice(String name) async => _player?.setAudioDevice(name);
+
   Future<void> setVolume(double volume) async => _player?.setVolume(volume);
 
   @override

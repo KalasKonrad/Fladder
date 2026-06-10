@@ -89,7 +89,23 @@ class LibMPV extends BasePlayer {
       }
     }
 
+    if (settings.audioDevice != null) {
+      await _player?.setAudioDevice(mpv.AudioDevice(settings.audioDevice!, ''));
+    }
+
     await _applyReplayGainSettings();
+  }
+
+  @override
+  Future<List<({String name, String description})>> getAudioDevices() async {
+    return (_player?.state.audioDevices ?? [])
+        .map((d) => (name: d.name, description: d.description))
+        .toList();
+  }
+
+  @override
+  Future<void> setAudioDevice(String name) async {
+    await _player?.setAudioDevice(mpv.AudioDevice(name, ''));
   }
 
   @override

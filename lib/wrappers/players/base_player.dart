@@ -40,6 +40,8 @@ abstract class BasePlayer {
   Future<int> setSubtitleTrack(SubStreamModel? model, PlaybackModel playbackModel);
   Future<int> setAudioTrack(AudioStreamModel? model, PlaybackModel playbackModel);
   void applySubtitleSettings(SubtitleSettingsModel settings) {}
+  Future<List<({String name, String description})>> getAudioDevices() async => [];
+  Future<void> setAudioDevice(String name) async {}
 
   Uri? isValidUrl(String input) {
     try {
