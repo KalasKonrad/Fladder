@@ -539,6 +539,8 @@ class MediaControlsWrapper extends BaseAudioHandler implements VideoPlayerContro
 
   Future<void> setAudioDevice(String name) async => _player?.setAudioDevice(name);
 
+  Future<String?> getProperty(String key) async => _player?.getProperty(key);
+
   Future<void> setVolume(double volume) async => _player?.setVolume(volume);
 
   @override

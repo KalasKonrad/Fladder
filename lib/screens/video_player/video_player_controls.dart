@@ -29,6 +29,7 @@ import 'package:fladder/screens/video_player/components/video_player_controls_ex
 import 'package:fladder/screens/video_player/components/video_player_options_sheet.dart';
 import 'package:fladder/screens/video_player/components/video_player_quality_controls.dart';
 import 'package:fladder/screens/video_player/components/video_player_screenshot_indicator.dart';
+import 'package:fladder/screens/video_player/components/video_player_stats_overlay.dart';
 import 'package:fladder/screens/video_player/components/video_player_seek_indicator.dart';
 import 'package:fladder/screens/video_player/components/video_player_speed_indicator.dart';
 import 'package:fladder/screens/video_player/components/video_player_volume_indicator.dart';
@@ -185,6 +186,7 @@ class _DesktopControlsState extends ConsumerState<DesktopControls> {
                 const VideoPlayerBrightnessIndicator(),
                 const VideoPlayerSpeedIndicator(),
                 const VideoPlayerScreenshotIndicator(),
+                const VideoPlayerStatsOverlay(),
                 Consumer(
                   builder: (context, ref, child) {
                     final position = ref.watch(mediaPlaybackProvider.select((value) => value.position));
@@ -1063,6 +1065,9 @@ class _DesktopControlsState extends ConsumerState<DesktopControls> {
         return true;
       case VideoHotKeys.toggleSubtitles:
         _toggleSubtitles();
+        return true;
+      case VideoHotKeys.toggleStats:
+        ref.read(showVideoStatsProvider.notifier).update((s) => !s);
         return true;
       case VideoHotKeys.seekForwardInstant:
         final seekForwardSeconds =

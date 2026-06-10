@@ -110,6 +110,16 @@ class LibMPV extends BasePlayer {
   }
 
   @override
+  Future<String?> getProperty(String key) async {
+    if (_player?.platform is! mpv.NativePlayer) return null;
+    try {
+      return await (_player!.platform as dynamic).getProperty(key) as String?;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
   Future<void> dispose() async {
     _fadeTimer?.cancel();
     _fadeTimer = null;

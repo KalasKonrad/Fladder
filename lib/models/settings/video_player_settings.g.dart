@@ -199,6 +199,7 @@ const _$VideoHotKeysEnumMap = {
   VideoHotKeys.takeScreenshot: 'takeScreenshot',
   VideoHotKeys.takeScreenshotClean: 'takeScreenshotClean',
   VideoHotKeys.toggleSubtitles: 'toggleSubtitles',
+  VideoHotKeys.toggleStats: 'toggleStats',
   VideoHotKeys.exit: 'exit',
 };
 

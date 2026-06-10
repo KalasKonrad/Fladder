@@ -1484,6 +1484,8 @@
     }
   },
   "copyStreamUrl": "Copy stream url",
+  "toggleStats": "Toggle Stats Overlay",
+  "@toggleStats": {},
   "htpcModeTitle": "HTPC Mode",
   "@htpcModeTitle": {},
   "htpcModeDesc": "TV/lean-back interface: fullscreen, TV layout, remote-friendly navigation",
