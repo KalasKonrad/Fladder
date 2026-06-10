@@ -73,6 +73,16 @@ local.properties
 *.afdesign~lock~
 *.afphoto~lock~
 
+# VS Code workspace
+*.code-workspace
+
+# makepkg build artifacts
+*.pkg.tar.zst
+*.pkg.tar.xz
+fladder-dev/
+src/
+pkg/
+
 # Inno Setup builds
 Output
 
