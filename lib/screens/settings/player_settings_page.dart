@@ -385,60 +385,34 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                 if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
                   SettingsListTile(
                     label: Text(context.localized.hwdecBackendTitle),
-                    subLabel: Text(
-                      videoSettings.hwdecBackend?.isNotEmpty == true
-                          ? videoSettings.hwdecBackend!
-                          : 'auto',
-                    ),
+                    subLabel: Text(context.localized.hwdecBackendDesc),
                     onTap: () async {
-                      final controller = TextEditingController(text: videoSettings.hwdecBackend ?? '');
+                      const options = ['auto', 'nvdec', 'nvdec-copy', 'vaapi', 'vaapi-copy', 'no'];
+                      final current = videoSettings.hwdecBackend?.isNotEmpty == true
+                          ? videoSettings.hwdecBackend!
+                          : 'auto';
                       await showDialog<void>(
                         context: context,
-                        builder: (context) => AlertDialog(
+                        builder: (context) => SimpleDialog(
                           title: Text(context.localized.hwdecBackendTitle),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(context.localized.hwdecBackendDesc,
-                                  style: Theme.of(context).textTheme.bodySmall),
-                              const SizedBox(height: 12),
-                              TextField(
-                                controller: controller,
-                                decoration: const InputDecoration(
-                                  hintText: 'auto',
-                                  border: OutlineInputBorder(),
-                                ),
-                                autofocus: true,
-                              ),
-                              const SizedBox(height: 8),
-                              Wrap(
-                                spacing: 6,
-                                children: ['auto', 'nvdec', 'nvdec-copy', 'vaapi', 'vaapi-copy', 'no']
-                                    .map((v) => ActionChip(
-                                          label: Text(v),
-                                          onPressed: () => controller.text = v,
-                                        ))
-                                    .toList(),
-                              ),
-                            ],
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text(context.localized.cancel),
-                            ),
-                            FilledButton(
-                              onPressed: () {
-                                provider.setHwdecBackend(controller.text);
-                                Navigator.pop(context);
-                              },
-                              child: Text(context.localized.save),
-                            ),
-                          ],
+                          children: options
+                              .map((v) => RadioListTile<String>(
+                                    title: Text(v),
+                                    value: v,
+                                    groupValue: current,
+                                    onChanged: (value) {
+                                      if (value != null) provider.setHwdecBackend(value == 'auto' ? null : value);
+                                      Navigator.pop(context);
+                                    },
+                                  ))
+                              .toList(),
                         ),
                       );
                     },
+                    trailing: Text(
+                      videoSettings.hwdecBackend?.isNotEmpty == true ? videoSettings.hwdecBackend! : 'auto',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
                 if (!kIsWeb)
                   SettingsListTile(
