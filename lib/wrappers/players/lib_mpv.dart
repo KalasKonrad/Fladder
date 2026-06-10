@@ -69,6 +69,7 @@ class LibMPV extends BasePlayer {
         _player!,
         configuration: VideoControllerConfiguration(
           enableHardwareAcceleration: settings.hardwareAccel,
+          hwdec: settings.hwdecBackend?.isNotEmpty == true ? settings.hwdecBackend : null,
         ),
       );
       _setupPlayerStreams(_player!);

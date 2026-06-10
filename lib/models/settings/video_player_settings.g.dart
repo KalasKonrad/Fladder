@@ -67,6 +67,7 @@ _VideoPlayerSettingsModel _$VideoPlayerSettingsModelFromJson(
               ?.map((e) => $enumDecode(_$AudioPassthroughCodecEnumMap, e))
               .toSet() ??
           const <AudioPassthroughCodec>{},
+      hwdecBackend: json['hwdecBackend'] as String?,
     );
 
 Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
@@ -109,6 +110,7 @@ Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
       'passthroughCodecs': instance.passthroughCodecs
           .map((e) => _$AudioPassthroughCodecEnumMap[e]!)
           .toList(),
+      'hwdecBackend': instance.hwdecBackend,
     };
 
 const _$BoxFitEnumMap = {

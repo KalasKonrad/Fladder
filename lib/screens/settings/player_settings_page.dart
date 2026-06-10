@@ -382,6 +382,64 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                     onChanged: (value) => provider.setHardwareAccel(value),
                   ),
                 ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.hwdecBackendTitle),
+                    subLabel: Text(
+                      videoSettings.hwdecBackend?.isNotEmpty == true
+                          ? videoSettings.hwdecBackend!
+                          : 'auto',
+                    ),
+                    onTap: () async {
+                      final controller = TextEditingController(text: videoSettings.hwdecBackend ?? '');
+                      await showDialog<void>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text(context.localized.hwdecBackendTitle),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(context.localized.hwdecBackendDesc,
+                                  style: Theme.of(context).textTheme.bodySmall),
+                              const SizedBox(height: 12),
+                              TextField(
+                                controller: controller,
+                                decoration: const InputDecoration(
+                                  hintText: 'auto',
+                                  border: OutlineInputBorder(),
+                                ),
+                                autofocus: true,
+                              ),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 6,
+                                children: ['auto', 'nvdec', 'nvdec-copy', 'vaapi', 'vaapi-copy', 'no']
+                                    .map((v) => ActionChip(
+                                          label: Text(v),
+                                          onPressed: () => controller.text = v,
+                                        ))
+                                    .toList(),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(context.localized.cancel),
+                            ),
+                            FilledButton(
+                              onPressed: () {
+                                provider.setHwdecBackend(controller.text);
+                                Navigator.pop(context);
+                              },
+                              child: Text(context.localized.save),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 if (!kIsWeb)
                   SettingsListTile(
                     label: Text(context.localized.settingsPlayerNativeLibassAccelTitle),

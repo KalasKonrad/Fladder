@@ -140,6 +140,7 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
     @Default(true) bool enableCrossfade,
     @Default(400) int crossfadeDurationMs,
     @Default(<AudioPassthroughCodec>{}) Set<AudioPassthroughCodec> passthroughCodecs,
+    String? hwdecBackend,
   }) = _VideoPlayerSettingsModel;
 
   bool get isAudioPassthroughEnabled => passthroughCodecs.isNotEmpty;

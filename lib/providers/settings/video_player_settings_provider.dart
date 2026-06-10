@@ -199,6 +199,9 @@ class VideoPlayerSettingsProviderNotifier extends StateNotifier<VideoPlayerSetti
 
   void setAudioDevice(String? name) => state = state.copyWith(audioDevice: name);
 
+  void setHwdecBackend(String? value) =>
+      state = state.copyWith(hwdecBackend: value?.isEmpty == true ? null : value);
+
   static VideoPlayerSettingsModel _sanitizeCrossfade(VideoPlayerSettingsModel value) {
     if (!value.canUseCrossfade && value.enableCrossfade) {
       return value.copyWith(enableCrossfade: false);
