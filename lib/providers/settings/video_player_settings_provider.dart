@@ -195,6 +195,8 @@ class VideoPlayerSettingsProviderNotifier extends StateNotifier<VideoPlayerSetti
 
   void setCrossfadeDurationMs(int value) => state = state.copyWith(crossfadeDurationMs: value);
 
+  void setPassthroughCodecs(Set<AudioPassthroughCodec> codecs) => state = state.copyWith(passthroughCodecs: codecs);
+
   static VideoPlayerSettingsModel _sanitizeCrossfade(VideoPlayerSettingsModel value) {
     if (!value.canUseCrossfade && value.enableCrossfade) {
       return value.copyWith(enableCrossfade: false);

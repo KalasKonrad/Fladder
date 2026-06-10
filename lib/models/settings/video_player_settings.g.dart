@@ -63,6 +63,10 @@ _VideoPlayerSettingsModel _$VideoPlayerSettingsModelFromJson(
       enableCrossfade: json['enableCrossfade'] as bool? ?? true,
       crossfadeDurationMs:
           (json['crossfadeDurationMs'] as num?)?.toInt() ?? 400,
+      passthroughCodecs: (json['passthroughCodecs'] as List<dynamic>?)
+              ?.map((e) => $enumDecode(_$AudioPassthroughCodecEnumMap, e))
+              .toSet() ??
+          const <AudioPassthroughCodec>{},
     );
 
 Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
@@ -102,6 +106,9 @@ Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
       'enablePlayPauseFade': instance.enablePlayPauseFade,
       'enableCrossfade': instance.enableCrossfade,
       'crossfadeDurationMs': instance.crossfadeDurationMs,
+      'passthroughCodecs': instance.passthroughCodecs
+          .map((e) => _$AudioPassthroughCodecEnumMap[e]!)
+          .toList(),
     };
 
 const _$BoxFitEnumMap = {
@@ -204,4 +211,12 @@ const _$ReplayGainVolumeLevelEnumMap = {
   ReplayGainVolumeLevel.quiet: 'quiet',
   ReplayGainVolumeLevel.normal: 'normal',
   ReplayGainVolumeLevel.loud: 'loud',
+};
+
+const _$AudioPassthroughCodecEnumMap = {
+  AudioPassthroughCodec.ac3: 'ac3',
+  AudioPassthroughCodec.eac3: 'eac3',
+  AudioPassthroughCodec.dts: 'dts',
+  AudioPassthroughCodec.dtsHdMa: 'dtsHdMa',
+  AudioPassthroughCodec.trueHd: 'trueHd',
 };

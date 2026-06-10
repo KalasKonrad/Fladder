@@ -24,6 +24,7 @@ import 'package:fladder/screens/shared/input_fields.dart';
 import 'package:fladder/screens/video_player/components/video_player_options_sheet.dart';
 import 'package:fladder/util/adaptive_layout/adaptive_layout.dart';
 import 'package:fladder/util/bitrate_helper.dart';
+import 'package:fladder/util/option_dialogue.dart';
 import 'package:fladder/util/box_fit_extension.dart';
 import 'package:fladder/util/localization_helper.dart';
 import 'package:fladder/widgets/shared/fladder_slider.dart';
@@ -50,6 +51,7 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
 
     final currentPlayer = videoSettings.wantedPlayer;
     final crossfadeSupported = videoSettings.canUseCrossfade;
+    final passthroughSupported = VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform;
 
     return SettingsScaffold(
       label: context.localized.settingsPlayerTitle,
@@ -551,6 +553,53 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                       ),
                     ],
                   ),
+                ),
+              if (currentPlayer == PlayerOptions.libMPV && passthroughSupported)
+                SettingsListTile(
+                  label: Text(context.localized.settingsPlayerAudioPassthroughTitle),
+                  subLabel: Text(context.localized.settingsPlayerAudioPassthroughDesc),
+                  onTap: () {
+                    if (videoSettings.isAudioPassthroughEnabled) {
+                      provider.setPassthroughCodecs({});
+                    } else {
+                      provider.setPassthroughCodecs(AudioPassthroughCodec.values.toSet());
+                    }
+                  },
+                  trailing: Switch(
+                    value: videoSettings.isAudioPassthroughEnabled,
+                    onChanged: (value) {
+                      if (value) {
+                        provider.setPassthroughCodecs(AudioPassthroughCodec.values.toSet());
+                      } else {
+                        provider.setPassthroughCodecs({});
+                      }
+                    },
+                  ),
+                ),
+              if (currentPlayer == PlayerOptions.libMPV && passthroughSupported && videoSettings.isAudioPassthroughEnabled)
+                SettingsListTile(
+                  label: Text(context.localized.settingsPlayerAudioPassthroughCodecsTitle),
+                  trailing: Text(
+                    videoSettings.passthroughCodecs.map((c) => c.label(context)).join(', '),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  onTap: () async {
+                    final result = await openMultiSelectOptions<AudioPassthroughCodec>(
+                      context,
+                      label: context.localized.settingsPlayerAudioPassthroughCodecsTitle,
+                      items: AudioPassthroughCodec.values,
+                      allowMultiSelection: true,
+                      forceAtleastOne: true,
+                      selected: videoSettings.passthroughCodecs.toList(),
+                      itemBuilder: (codec, selected, tap) => CheckboxListTile(
+                        contentPadding: EdgeInsets.zero,
+                        value: selected,
+                        onChanged: (_) => tap(),
+                        title: Text(codec.label(context)),
+                      ),
+                    );
+                    provider.setPassthroughCodecs(result.toSet());
+                  },
                 ),
               if (currentPlayer == PlayerOptions.libMDK)
                 SettingsListTile(

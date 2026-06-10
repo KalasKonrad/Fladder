@@ -83,6 +83,10 @@ class LibMPV extends BasePlayer {
         // Use audiotrack as it is generally more stable on modern Android
         await nativePlayer.setProperty('ao', 'audiotrack');
       }
+
+      if (settings.isAudioPassthroughEnabled && defaultTargetPlatform == TargetPlatform.linux) {
+        await nativePlayer.setProperty('audio-spdif', settings.passthroughSpdifValue);
+      }
     }
 
     await _applyReplayGainSettings();
@@ -133,7 +137,9 @@ class LibMPV extends BasePlayer {
   }
 
   Future<void> crossfadeToUrl(String url, Duration startPosition, {double? replayGainDb}) async {
-    if (!_settings.enableCrossfade || !VideoPlayerSettingsModel.crossfadeSupportedOnCurrentPlatform) {
+    if (!_settings.enableCrossfade ||
+        !VideoPlayerSettingsModel.crossfadeSupportedOnCurrentPlatform ||
+        (_settings.isAudioPassthroughEnabled && defaultTargetPlatform == TargetPlatform.linux)) {
       await _applyReplayGainSettings(trackGainDb: replayGainDb);
       await loadVideo(url, true, startPosition: startPosition);
       return;
@@ -163,6 +169,9 @@ class LibMPV extends BasePlayer {
       await native.setProperty('gapless-audio', 'weak');
       if (defaultTargetPlatform == TargetPlatform.android) {
         await native.setProperty('ao', 'audiotrack');
+      }
+      if (_settings.isAudioPassthroughEnabled && defaultTargetPlatform == TargetPlatform.linux) {
+        await native.setProperty('audio-spdif', _settings.passthroughSpdifValue);
       }
       await native.setProperty('start', '${startPosition.inMilliseconds / 1000}');
     }
@@ -299,6 +308,11 @@ class LibMPV extends BasePlayer {
   Future<void> _applyReplayGainSettings({double? trackGainDb, mpv.Player? targetPlayer}) async {
     final player = targetPlayer ?? _player;
     if (player?.platform is! mpv.NativePlayer) {
+      return;
+    }
+
+    // Cannot apply DSP filters over a passthrough bitstream
+    if (_settings.isAudioPassthroughEnabled && defaultTargetPlatform == TargetPlatform.linux) {
       return;
     }
 

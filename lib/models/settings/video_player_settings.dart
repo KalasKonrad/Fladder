@@ -68,6 +68,30 @@ enum VideoHotKeys {
   }
 }
 
+enum AudioPassthroughCodec {
+  ac3,
+  eac3,
+  dts,
+  dtsHdMa,
+  trueHd;
+
+  String get mpvValue => switch (this) {
+        AudioPassthroughCodec.ac3 => 'ac3',
+        AudioPassthroughCodec.eac3 => 'eac3',
+        AudioPassthroughCodec.dts => 'dts',
+        AudioPassthroughCodec.dtsHdMa => 'dts-hd-ma',
+        AudioPassthroughCodec.trueHd => 'truehd',
+      };
+
+  String label(BuildContext context) => switch (this) {
+        AudioPassthroughCodec.ac3 => context.localized.audioPassthroughCodecAc3,
+        AudioPassthroughCodec.eac3 => context.localized.audioPassthroughCodecEac3,
+        AudioPassthroughCodec.dts => context.localized.audioPassthroughCodecDts,
+        AudioPassthroughCodec.dtsHdMa => context.localized.audioPassthroughCodecDtsHdMa,
+        AudioPassthroughCodec.trueHd => context.localized.audioPassthroughCodecTrueHd,
+      };
+}
+
 @Freezed(copyWith: true)
 abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
   const VideoPlayerSettingsModel._();
@@ -78,6 +102,11 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
       TargetPlatform.android || TargetPlatform.iOS => false,
       _ => true,
     };
+  }
+
+  static bool get passthroughSupportedOnCurrentPlatform {
+    if (kIsWeb) return false;
+    return defaultTargetPlatform == TargetPlatform.linux;
   }
 
   factory VideoPlayerSettingsModel({
@@ -110,7 +139,11 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
     @Default(true) bool enablePlayPauseFade,
     @Default(true) bool enableCrossfade,
     @Default(400) int crossfadeDurationMs,
+    @Default(<AudioPassthroughCodec>{}) Set<AudioPassthroughCodec> passthroughCodecs,
   }) = _VideoPlayerSettingsModel;
+
+  bool get isAudioPassthroughEnabled => passthroughCodecs.isNotEmpty;
+  String get passthroughSpdifValue => passthroughCodecs.map((c) => c.mpvValue).join(',');
 
   double get volume => internalVolume;
 
@@ -131,7 +164,9 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
         other.enableTunneling == enableTunneling &&
         other.useLibass == useLibass &&
         other.bufferSize == bufferSize &&
-        other.wantedPlayer == wantedPlayer;
+        other.wantedPlayer == wantedPlayer &&
+        other.passthroughCodecs.length == passthroughCodecs.length &&
+        other.passthroughCodecs.containsAll(passthroughCodecs);
   }
 
   @override
@@ -148,7 +183,9 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
         other.bufferSize == bufferSize &&
         other.internalVolume == internalVolume &&
         other.playerOptions == playerOptions &&
-        other.audioDevice == audioDevice;
+        other.audioDevice == audioDevice &&
+        other.passthroughCodecs.length == passthroughCodecs.length &&
+        other.passthroughCodecs.containsAll(passthroughCodecs);
   }
 
   @override
@@ -161,7 +198,8 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
         enableTunneling.hashCode ^
         bufferSize.hashCode ^
         internalVolume.hashCode ^
-        audioDevice.hashCode;
+        audioDevice.hashCode ^
+        passthroughCodecs.hashCode;
   }
 }
 
