@@ -7,8 +7,10 @@ import 'package:iconsax_plus/iconsax_plus.dart';
 
 import 'package:fladder/models/collection_types.dart';
 import 'package:fladder/models/settings/client_settings_model.dart';
+import 'package:fladder/providers/arguments_provider.dart';
 import 'package:fladder/providers/settings/client_settings_provider.dart';
 import 'package:fladder/providers/views_provider.dart';
+import 'package:fladder/util/window_actions.dart';
 import 'package:fladder/routes/auto_router.dart';
 import 'package:fladder/routes/auto_router.gr.dart';
 import 'package:fladder/screens/metadata/refresh_metadata.dart';
@@ -405,6 +407,16 @@ class _SideNavigationRail extends ConsumerState<SideNavigationRail> {
                               }
                             },
                           ),
+                          if (ref.watch(argumentsStateProvider.select((v) => v.htpcMode)))
+                            NavigationButton(
+                              label: context.localized.exitFladderTitle,
+                              selected: false,
+                              selectedIcon: const Icon(IconsaxPlusLinear.logout),
+                              icon: const Icon(IconsaxPlusLinear.logout),
+                              horizontal: true,
+                              expanded: shouldExpand,
+                              onPressed: () => quitApplication(context),
+                            ),
                         ],
                       ),
                     ),
