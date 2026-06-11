@@ -256,14 +256,6 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
         other.useLibass == useLibass &&
         other.bufferSize == bufferSize &&
         other.wantedPlayer == wantedPlayer &&
-        other.hwdecBackend == hwdecBackend &&
-        other.deinterlace == deinterlace &&
-        other.videoSync == videoSync &&
-        other.interpolation == interpolation &&
-        other.tscale == tscale &&
-        other.toneMapping == toneMapping &&
-        other.targetColorspaceHint == targetColorspaceHint &&
-        other.demuxerMaxCacheSizeMb == demuxerMaxCacheSizeMb &&
         other.passthroughCodecs.length == passthroughCodecs.length &&
         other.passthroughCodecs.containsAll(passthroughCodecs);
   }
