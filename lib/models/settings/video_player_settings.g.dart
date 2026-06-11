@@ -68,6 +68,19 @@ _VideoPlayerSettingsModel _$VideoPlayerSettingsModelFromJson(
               .toSet() ??
           const <AudioPassthroughCodec>{},
       hwdecBackend: json['hwdecBackend'] as String?,
+      deinterlace: json['deinterlace'] as bool? ?? false,
+      videoSync:
+          $enumDecodeNullable(_$MpvVideoSyncEnumMap, json['videoSync']) ??
+              MpvVideoSync.audio,
+      interpolation: json['interpolation'] as bool? ?? false,
+      tscale: $enumDecodeNullable(_$MpvTscaleEnumMap, json['tscale']) ??
+          MpvTscale.oversample,
+      toneMapping:
+          $enumDecodeNullable(_$MpvToneMappingEnumMap, json['toneMapping']) ??
+              MpvToneMapping.auto,
+      targetColorspaceHint: json['targetColorspaceHint'] as bool? ?? false,
+      demuxerMaxCacheSizeMb:
+          (json['demuxerMaxCacheSizeMb'] as num?)?.toInt() ?? 150,
     );
 
 Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
@@ -111,6 +124,13 @@ Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
           .map((e) => _$AudioPassthroughCodecEnumMap[e]!)
           .toList(),
       'hwdecBackend': instance.hwdecBackend,
+      'deinterlace': instance.deinterlace,
+      'videoSync': _$MpvVideoSyncEnumMap[instance.videoSync]!,
+      'interpolation': instance.interpolation,
+      'tscale': _$MpvTscaleEnumMap[instance.tscale]!,
+      'toneMapping': _$MpvToneMappingEnumMap[instance.toneMapping]!,
+      'targetColorspaceHint': instance.targetColorspaceHint,
+      'demuxerMaxCacheSizeMb': instance.demuxerMaxCacheSizeMb,
     };
 
 const _$BoxFitEnumMap = {
@@ -223,4 +243,31 @@ const _$AudioPassthroughCodecEnumMap = {
   AudioPassthroughCodec.dts: 'dts',
   AudioPassthroughCodec.dtsHdMa: 'dtsHdMa',
   AudioPassthroughCodec.trueHd: 'trueHd',
+};
+
+const _$MpvVideoSyncEnumMap = {
+  MpvVideoSync.audio: 'audio',
+  MpvVideoSync.displayResample: 'displayResample',
+  MpvVideoSync.displayVdrop: 'displayVdrop',
+  MpvVideoSync.displayAdrop: 'displayAdrop',
+};
+
+const _$MpvTscaleEnumMap = {
+  MpvTscale.oversample: 'oversample',
+  MpvTscale.linear: 'linear',
+  MpvTscale.catmullRom: 'catmullRom',
+  MpvTscale.mitchell: 'mitchell',
+  MpvTscale.gaussian: 'gaussian',
+  MpvTscale.bicubic: 'bicubic',
+};
+
+const _$MpvToneMappingEnumMap = {
+  MpvToneMapping.auto: 'auto',
+  MpvToneMapping.clip: 'clip',
+  MpvToneMapping.mobius: 'mobius',
+  MpvToneMapping.reinhard: 'reinhard',
+  MpvToneMapping.hable: 'hable',
+  MpvToneMapping.bt2390: 'bt2390',
+  MpvToneMapping.gamma: 'gamma',
+  MpvToneMapping.linear: 'linear',
 };

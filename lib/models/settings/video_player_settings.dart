@@ -94,6 +94,87 @@ enum AudioPassthroughCodec {
       };
 }
 
+enum MpvVideoSync {
+  audio,
+  displayResample,
+  displayVdrop,
+  displayAdrop;
+
+  String get mpvValue => switch (this) {
+        MpvVideoSync.audio => 'audio',
+        MpvVideoSync.displayResample => 'display-resample',
+        MpvVideoSync.displayVdrop => 'display-vdrop',
+        MpvVideoSync.displayAdrop => 'display-adrop',
+      };
+
+  String label(BuildContext context) => switch (this) {
+        MpvVideoSync.audio => 'Audio (default)',
+        MpvVideoSync.displayResample => 'Display resample',
+        MpvVideoSync.displayVdrop => 'Display vdrop',
+        MpvVideoSync.displayAdrop => 'Display adrop',
+      };
+}
+
+enum MpvToneMapping {
+  auto,
+  clip,
+  mobius,
+  reinhard,
+  hable,
+  bt2390,
+  gamma,
+  linear;
+
+  String get mpvValue => switch (this) {
+        MpvToneMapping.auto => 'auto',
+        MpvToneMapping.clip => 'clip',
+        MpvToneMapping.mobius => 'mobius',
+        MpvToneMapping.reinhard => 'reinhard',
+        MpvToneMapping.hable => 'hable',
+        MpvToneMapping.bt2390 => 'bt.2390',
+        MpvToneMapping.gamma => 'gamma',
+        MpvToneMapping.linear => 'linear',
+      };
+
+  String label(BuildContext context) => switch (this) {
+        MpvToneMapping.auto => 'Auto',
+        MpvToneMapping.clip => 'Clip',
+        MpvToneMapping.mobius => 'Mobius',
+        MpvToneMapping.reinhard => 'Reinhard',
+        MpvToneMapping.hable => 'Hable (Filmic)',
+        MpvToneMapping.bt2390 => 'BT.2390',
+        MpvToneMapping.gamma => 'Gamma',
+        MpvToneMapping.linear => 'Linear',
+      };
+}
+
+enum MpvTscale {
+  oversample,
+  linear,
+  catmullRom,
+  mitchell,
+  gaussian,
+  bicubic;
+
+  String get mpvValue => switch (this) {
+        MpvTscale.oversample => 'oversample',
+        MpvTscale.linear => 'linear',
+        MpvTscale.catmullRom => 'catmull_rom',
+        MpvTscale.mitchell => 'mitchell',
+        MpvTscale.gaussian => 'gaussian',
+        MpvTscale.bicubic => 'bicubic',
+      };
+
+  String label(BuildContext context) => switch (this) {
+        MpvTscale.oversample => 'Oversample (default)',
+        MpvTscale.linear => 'Linear',
+        MpvTscale.catmullRom => 'Catmull-Rom',
+        MpvTscale.mitchell => 'Mitchell',
+        MpvTscale.gaussian => 'Gaussian',
+        MpvTscale.bicubic => 'Bicubic',
+      };
+}
+
 @Freezed(copyWith: true)
 abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
   const VideoPlayerSettingsModel._();
@@ -143,6 +224,13 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
     @Default(400) int crossfadeDurationMs,
     @Default(<AudioPassthroughCodec>{}) Set<AudioPassthroughCodec> passthroughCodecs,
     String? hwdecBackend,
+    @Default(false) bool deinterlace,
+    @Default(MpvVideoSync.audio) MpvVideoSync videoSync,
+    @Default(false) bool interpolation,
+    @Default(MpvTscale.oversample) MpvTscale tscale,
+    @Default(MpvToneMapping.auto) MpvToneMapping toneMapping,
+    @Default(false) bool targetColorspaceHint,
+    @Default(150) int demuxerMaxCacheSizeMb,
   }) = _VideoPlayerSettingsModel;
 
   bool get isAudioPassthroughEnabled => passthroughCodecs.isNotEmpty;
@@ -168,6 +256,14 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
         other.useLibass == useLibass &&
         other.bufferSize == bufferSize &&
         other.wantedPlayer == wantedPlayer &&
+        other.hwdecBackend == hwdecBackend &&
+        other.deinterlace == deinterlace &&
+        other.videoSync == videoSync &&
+        other.interpolation == interpolation &&
+        other.tscale == tscale &&
+        other.toneMapping == toneMapping &&
+        other.targetColorspaceHint == targetColorspaceHint &&
+        other.demuxerMaxCacheSizeMb == demuxerMaxCacheSizeMb &&
         other.passthroughCodecs.length == passthroughCodecs.length &&
         other.passthroughCodecs.containsAll(passthroughCodecs);
   }

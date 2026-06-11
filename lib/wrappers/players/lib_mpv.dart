@@ -88,6 +88,18 @@ class LibMPV extends BasePlayer {
       if (settings.isAudioPassthroughEnabled && defaultTargetPlatform == TargetPlatform.linux) {
         await nativePlayer.setProperty('audio-spdif', settings.passthroughSpdifValue);
       }
+
+      if (defaultTargetPlatform == TargetPlatform.linux) {
+        await nativePlayer.setProperty('deinterlace', settings.deinterlace ? 'yes' : 'no');
+        await nativePlayer.setProperty('video-sync', settings.videoSync.mpvValue);
+        await nativePlayer.setProperty('interpolation', settings.interpolation ? 'yes' : 'no');
+        if (settings.interpolation) {
+          await nativePlayer.setProperty('tscale', settings.tscale.mpvValue);
+        }
+        await nativePlayer.setProperty('tone-mapping', settings.toneMapping.mpvValue);
+        await nativePlayer.setProperty('target-colorspace-hint', settings.targetColorspaceHint ? 'yes' : 'no');
+        await nativePlayer.setProperty('demuxer-max-cache-size', '${settings.demuxerMaxCacheSizeMb}MiB');
+      }
     }
 
     if (settings.audioDevice != null) {
@@ -199,6 +211,17 @@ class LibMPV extends BasePlayer {
       }
       if (_settings.isAudioPassthroughEnabled && defaultTargetPlatform == TargetPlatform.linux) {
         await native.setProperty('audio-spdif', _settings.passthroughSpdifValue);
+      }
+      if (defaultTargetPlatform == TargetPlatform.linux) {
+        await native.setProperty('deinterlace', _settings.deinterlace ? 'yes' : 'no');
+        await native.setProperty('video-sync', _settings.videoSync.mpvValue);
+        await native.setProperty('interpolation', _settings.interpolation ? 'yes' : 'no');
+        if (_settings.interpolation) {
+          await native.setProperty('tscale', _settings.tscale.mpvValue);
+        }
+        await native.setProperty('tone-mapping', _settings.toneMapping.mpvValue);
+        await native.setProperty('target-colorspace-hint', _settings.targetColorspaceHint ? 'yes' : 'no');
+        await native.setProperty('demuxer-max-cache-size', '${_settings.demuxerMaxCacheSizeMb}MiB');
       }
       await native.setProperty('start', '${startPosition.inMilliseconds / 1000}');
     }

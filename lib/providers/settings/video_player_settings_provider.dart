@@ -202,6 +202,14 @@ class VideoPlayerSettingsProviderNotifier extends StateNotifier<VideoPlayerSetti
   void setHwdecBackend(String? value) =>
       state = state.copyWith(hwdecBackend: value?.isEmpty == true ? null : value);
 
+  void setDeinterlace(bool value) => state = state.copyWith(deinterlace: value);
+  void setVideoSync(MpvVideoSync value) => state = state.copyWith(videoSync: value);
+  void setInterpolation(bool value) => state = state.copyWith(interpolation: value);
+  void setTscale(MpvTscale value) => state = state.copyWith(tscale: value);
+  void setToneMapping(MpvToneMapping value) => state = state.copyWith(toneMapping: value);
+  void setTargetColorspaceHint(bool value) => state = state.copyWith(targetColorspaceHint: value);
+  void setDemuxerMaxCacheSizeMb(int value) => state = state.copyWith(demuxerMaxCacheSizeMb: value);
+
   static VideoPlayerSettingsModel _sanitizeCrossfade(VideoPlayerSettingsModel value) {
     if (!value.canUseCrossfade && value.enableCrossfade) {
       return value.copyWith(enableCrossfade: false);

@@ -414,6 +414,149 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.deinterlaceTitle),
+                    subLabel: Text(context.localized.deinterlaceDesc),
+                    onTap: () => provider.setDeinterlace(!videoSettings.deinterlace),
+                    trailing: Switch(
+                      value: videoSettings.deinterlace,
+                      onChanged: provider.setDeinterlace,
+                    ),
+                  ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.videoSyncTitle),
+                    subLabel: Text(context.localized.videoSyncDesc),
+                    onTap: () async {
+                      await showDialog<void>(
+                        context: context,
+                        builder: (context) => SimpleDialog(
+                          title: Text(context.localized.videoSyncTitle),
+                          children: MpvVideoSync.values
+                              .map((v) => RadioListTile<MpvVideoSync>(
+                                    title: Text(v.label(context)),
+                                    value: v,
+                                    groupValue: videoSettings.videoSync,
+                                    onChanged: (value) {
+                                      if (value != null) provider.setVideoSync(value);
+                                      Navigator.pop(context);
+                                    },
+                                  ))
+                              .toList(),
+                        ),
+                      );
+                    },
+                    trailing: Text(
+                      videoSettings.videoSync.label(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.interpolationTitle),
+                    subLabel: Text(context.localized.interpolationDesc),
+                    onTap: () => provider.setInterpolation(!videoSettings.interpolation),
+                    trailing: Switch(
+                      value: videoSettings.interpolation,
+                      onChanged: provider.setInterpolation,
+                    ),
+                  ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform && videoSettings.interpolation)
+                  SettingsListTile(
+                    label: Text(context.localized.tscaleTitle),
+                    subLabel: Text(context.localized.tscaleDesc),
+                    onTap: () async {
+                      await showDialog<void>(
+                        context: context,
+                        builder: (context) => SimpleDialog(
+                          title: Text(context.localized.tscaleTitle),
+                          children: MpvTscale.values
+                              .map((v) => RadioListTile<MpvTscale>(
+                                    title: Text(v.label(context)),
+                                    value: v,
+                                    groupValue: videoSettings.tscale,
+                                    onChanged: (value) {
+                                      if (value != null) provider.setTscale(value);
+                                      Navigator.pop(context);
+                                    },
+                                  ))
+                              .toList(),
+                        ),
+                      );
+                    },
+                    trailing: Text(
+                      videoSettings.tscale.label(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.toneMappingTitle),
+                    subLabel: Text(context.localized.toneMappingDesc),
+                    onTap: () async {
+                      await showDialog<void>(
+                        context: context,
+                        builder: (context) => SimpleDialog(
+                          title: Text(context.localized.toneMappingTitle),
+                          children: MpvToneMapping.values
+                              .map((v) => RadioListTile<MpvToneMapping>(
+                                    title: Text(v.label(context)),
+                                    value: v,
+                                    groupValue: videoSettings.toneMapping,
+                                    onChanged: (value) {
+                                      if (value != null) provider.setToneMapping(value);
+                                      Navigator.pop(context);
+                                    },
+                                  ))
+                              .toList(),
+                        ),
+                      );
+                    },
+                    trailing: Text(
+                      videoSettings.toneMapping.label(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.targetColorspaceHintTitle),
+                    subLabel: Text(context.localized.targetColorspaceHintDesc),
+                    onTap: () => provider.setTargetColorspaceHint(!videoSettings.targetColorspaceHint),
+                    trailing: Switch(
+                      value: videoSettings.targetColorspaceHint,
+                      onChanged: provider.setTargetColorspaceHint,
+                    ),
+                  ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.demuxerCacheSizeTitle),
+                    subLabel: Text(context.localized.demuxerCacheSizeDesc),
+                    onTap: () async {
+                      const options = [50, 150, 300, 500, 1000, 2000];
+                      await showDialog<void>(
+                        context: context,
+                        builder: (context) => SimpleDialog(
+                          title: Text(context.localized.demuxerCacheSizeTitle),
+                          children: options
+                              .map((v) => RadioListTile<int>(
+                                    title: Text('$v MB'),
+                                    value: v,
+                                    groupValue: videoSettings.demuxerMaxCacheSizeMb,
+                                    onChanged: (value) {
+                                      if (value != null) provider.setDemuxerMaxCacheSizeMb(value);
+                                      Navigator.pop(context);
+                                    },
+                                  ))
+                              .toList(),
+                        ),
+                      );
+                    },
+                    trailing: Text(
+                      '${videoSettings.demuxerMaxCacheSizeMb} MB',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
                 if (!kIsWeb)
                   SettingsListTile(
                     label: Text(context.localized.settingsPlayerNativeLibassAccelTitle),
