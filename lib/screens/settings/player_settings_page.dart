@@ -387,7 +387,7 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                     label: Text(context.localized.hwdecBackendTitle),
                     subLabel: Text(context.localized.hwdecBackendDesc),
                     onTap: () async {
-                      const options = ['auto', 'nvdec', 'nvdec-copy', 'vaapi', 'vaapi-copy', 'no'];
+                      const options = ['auto', 'nvdec', 'nvdec-copy', 'vaapi', 'vaapi-copy', 'vdpau', 'vdpau-copy', 'no'];
                       final current = videoSettings.hwdecBackend?.isNotEmpty == true
                           ? videoSettings.hwdecBackend!
                           : 'auto';
