@@ -84,6 +84,7 @@ _VideoPlayerSettingsModel _$VideoPlayerSettingsModelFromJson(
       videoLatencyHacks: json['videoLatencyHacks'] as bool? ?? false,
       gpuApi: $enumDecodeNullable(_$MpvGpuApiEnumMap, json['gpuApi']) ??
           MpvGpuApi.auto,
+      openglEarlyFlush: json['openglEarlyFlush'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
@@ -136,6 +137,7 @@ Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
       'demuxerMaxCacheSizeMb': instance.demuxerMaxCacheSizeMb,
       'videoLatencyHacks': instance.videoLatencyHacks,
       'gpuApi': _$MpvGpuApiEnumMap[instance.gpuApi]!,
+      'openglEarlyFlush': instance.openglEarlyFlush,
     };
 
 const _$BoxFitEnumMap = {

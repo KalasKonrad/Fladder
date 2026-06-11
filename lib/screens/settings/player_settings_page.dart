@@ -605,6 +605,16 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.openglEarlyFlushTitle),
+                    subLabel: Text(context.localized.openglEarlyFlushDesc),
+                    onTap: () => provider.setOpenglEarlyFlush(!videoSettings.openglEarlyFlush),
+                    trailing: Switch(
+                      value: videoSettings.openglEarlyFlush,
+                      onChanged: (value) => provider.setOpenglEarlyFlush(value),
+                    ),
+                  ),
                 if (!kIsWeb)
                   SettingsListTile(
                     label: Text(context.localized.settingsPlayerNativeLibassAccelTitle),

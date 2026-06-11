@@ -102,6 +102,7 @@ class LibMPV extends BasePlayer {
         await nativePlayer.setProperty('video-latency-hacks', settings.videoLatencyHacks ? 'yes' : 'no');
         final gpuApiValue = settings.gpuApi.mpvValue;
         if (gpuApiValue != null) await nativePlayer.setProperty('gpu-api', gpuApiValue);
+        await nativePlayer.setProperty('opengl-early-flush', settings.openglEarlyFlush ? 'yes' : 'no');
       }
     }
 
@@ -228,6 +229,7 @@ class LibMPV extends BasePlayer {
         await native.setProperty('video-latency-hacks', _settings.videoLatencyHacks ? 'yes' : 'no');
         final gpuApiValue = _settings.gpuApi.mpvValue;
         if (gpuApiValue != null) await native.setProperty('gpu-api', gpuApiValue);
+        await native.setProperty('opengl-early-flush', _settings.openglEarlyFlush ? 'yes' : 'no');
       }
       await native.setProperty('start', '${startPosition.inMilliseconds / 1000}');
     }

@@ -251,6 +251,7 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
     @Default(150) int demuxerMaxCacheSizeMb,
     @Default(false) bool videoLatencyHacks,
     @Default(MpvGpuApi.auto) MpvGpuApi gpuApi,
+    @Default(false) bool openglEarlyFlush,
   }) = _VideoPlayerSettingsModel;
 
   bool get isAudioPassthroughEnabled => passthroughCodecs.isNotEmpty;

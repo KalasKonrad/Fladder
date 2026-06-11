@@ -86,6 +86,7 @@ class _VideoPlayerStatsOverlayState extends ConsumerState<VideoPlayerStatsOverla
       p('interpolation'),
       p('tscale'),
       p('target-colorspace-hint'),
+      p('gpu-api'),
     ]);
 
     final cpuFuture = _readCpuUsage();
@@ -137,6 +138,7 @@ class _VideoPlayerStatsOverlayState extends ConsumerState<VideoPlayerStatsOverla
         interpolation: results[36],
         tscale: results[37],
         targetColorspaceHint: results[38],
+        gpuApi: results[39],
         cpuUsage: cpuUsage,
         gpuStats: gpuStats,
       );
@@ -303,6 +305,7 @@ class _VideoPlayerStatsOverlayState extends ConsumerState<VideoPlayerStatsOverla
                 const SizedBox(height: 4),
                 _section('DISPLAY'),
                 _row('VO', _stats.currentVo),
+                if (_stats.gpuApi != null) _row('GPU API', _stats.gpuApi),
                 _row('Refresh', _displayFpsLabel),
                 _row('Out fmt', _stats.outPixelFormat),
                 _row('Video sync', _stats.videoSync),
@@ -552,6 +555,7 @@ class _Stats {
   final String? interpolation;
   final String? tscale;
   final String? targetColorspaceHint;
+  final String? gpuApi;
   final double? cpuUsage;
   final _GpuStats? gpuStats;
 
@@ -595,6 +599,7 @@ class _Stats {
     this.interpolation,
     this.tscale,
     this.targetColorspaceHint,
+    this.gpuApi,
     this.cpuUsage,
     this.gpuStats,
   });
