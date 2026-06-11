@@ -80,6 +80,12 @@ class _VideoPlayerStatsOverlayState extends ConsumerState<VideoPlayerStatsOverla
       p('vsync-ratio'),
       p('demuxer-cache-duration'),
       p('cache-speed'),
+      p('deinterlace'),
+      p('tone-mapping'),
+      p('video-sync'),
+      p('interpolation'),
+      p('tscale'),
+      p('target-colorspace-hint'),
     ]);
 
     final cpuFuture = _readCpuUsage();
@@ -125,6 +131,12 @@ class _VideoPlayerStatsOverlayState extends ConsumerState<VideoPlayerStatsOverla
         vsyncRatio: results[30],
         cacheDuration: results[31],
         cacheSpeed: results[32],
+        deinterlace: results[33],
+        toneMapping: results[34],
+        videoSync: results[35],
+        interpolation: results[36],
+        tscale: results[37],
+        targetColorspaceHint: results[38],
         cpuUsage: cpuUsage,
         gpuStats: gpuStats,
       );
@@ -274,6 +286,8 @@ class _VideoPlayerStatsOverlayState extends ConsumerState<VideoPlayerStatsOverla
                 _section('VIDEO'),
                 _row('Codec', _stats.videoCodec),
                 _row('Decode', _hwdecLabel),
+                if (_stats.deinterlace == 'yes') _row('Deinterlace', 'on'),
+                _row('Tone map', _stats.toneMapping),
                 _row('Input', _inputRes),
                 _row('Output', _outputRes),
                 _row('FPS', _fps),
@@ -291,6 +305,9 @@ class _VideoPlayerStatsOverlayState extends ConsumerState<VideoPlayerStatsOverla
                 _row('VO', _stats.currentVo),
                 _row('Refresh', _displayFpsLabel),
                 _row('Out fmt', _stats.outPixelFormat),
+                _row('Video sync', _stats.videoSync),
+                if (_stats.interpolation == 'yes') _row('Interpolation', _stats.tscale ?? 'on'),
+                if (_stats.targetColorspaceHint == 'yes') _row('CS hint', 'on'),
                 const SizedBox(height: 4),
                 _section('SYSTEM'),
                 _row('CPU', _cpuLabel),
@@ -529,6 +546,12 @@ class _Stats {
   final String? vsyncRatio;
   final String? cacheDuration;
   final String? cacheSpeed;
+  final String? deinterlace;
+  final String? toneMapping;
+  final String? videoSync;
+  final String? interpolation;
+  final String? tscale;
+  final String? targetColorspaceHint;
   final double? cpuUsage;
   final _GpuStats? gpuStats;
 
@@ -566,6 +589,12 @@ class _Stats {
     this.vsyncRatio,
     this.cacheDuration,
     this.cacheSpeed,
+    this.deinterlace,
+    this.toneMapping,
+    this.videoSync,
+    this.interpolation,
+    this.tscale,
+    this.targetColorspaceHint,
     this.cpuUsage,
     this.gpuStats,
   });
