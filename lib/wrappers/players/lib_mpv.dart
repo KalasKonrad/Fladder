@@ -100,8 +100,8 @@ class LibMPV extends BasePlayer {
         await nativePlayer.setProperty('target-colorspace-hint', settings.targetColorspaceHint ? 'yes' : 'no');
         await nativePlayer.setProperty('demuxer-max-cache-size', '${settings.demuxerMaxCacheSizeMb}MiB');
         await nativePlayer.setProperty('video-latency-hacks', settings.videoLatencyHacks ? 'yes' : 'no');
-        final voValue = settings.voDriver.mpvValue;
-        if (voValue != null) await nativePlayer.setProperty('vo', voValue);
+        final gpuApiValue = settings.gpuApi.mpvValue;
+        if (gpuApiValue != null) await nativePlayer.setProperty('gpu-api', gpuApiValue);
       }
     }
 
@@ -226,8 +226,8 @@ class LibMPV extends BasePlayer {
         await native.setProperty('target-colorspace-hint', _settings.targetColorspaceHint ? 'yes' : 'no');
         await native.setProperty('demuxer-max-cache-size', '${_settings.demuxerMaxCacheSizeMb}MiB');
         await native.setProperty('video-latency-hacks', _settings.videoLatencyHacks ? 'yes' : 'no');
-        final voValue = _settings.voDriver.mpvValue;
-        if (voValue != null) await native.setProperty('vo', voValue);
+        final gpuApiValue = _settings.gpuApi.mpvValue;
+        if (gpuApiValue != null) await native.setProperty('gpu-api', gpuApiValue);
       }
       await native.setProperty('start', '${startPosition.inMilliseconds / 1000}');
     }

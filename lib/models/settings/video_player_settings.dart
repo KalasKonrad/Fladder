@@ -175,21 +175,21 @@ enum MpvTscale {
       };
 }
 
-enum MpvVoDriver {
+enum MpvGpuApi {
   auto,
-  gpuNext,
-  gpu;
+  opengl,
+  vulkan;
 
   String? get mpvValue => switch (this) {
-        MpvVoDriver.auto => null,
-        MpvVoDriver.gpuNext => 'gpu-next',
-        MpvVoDriver.gpu => 'gpu',
+        MpvGpuApi.auto => null,
+        MpvGpuApi.opengl => 'opengl',
+        MpvGpuApi.vulkan => 'vulkan',
       };
 
   String label(BuildContext context) => switch (this) {
-        MpvVoDriver.auto => 'Auto (default)',
-        MpvVoDriver.gpuNext => 'gpu-next (modern Vulkan/GL)',
-        MpvVoDriver.gpu => 'gpu (legacy OpenGL)',
+        MpvGpuApi.auto => 'Auto (default)',
+        MpvGpuApi.opengl => 'OpenGL (recommended for NVIDIA legacy)',
+        MpvGpuApi.vulkan => 'Vulkan',
       };
 }
 
@@ -250,7 +250,7 @@ abstract class VideoPlayerSettingsModel with _$VideoPlayerSettingsModel {
     @Default(false) bool targetColorspaceHint,
     @Default(150) int demuxerMaxCacheSizeMb,
     @Default(false) bool videoLatencyHacks,
-    @Default(MpvVoDriver.auto) MpvVoDriver voDriver,
+    @Default(MpvGpuApi.auto) MpvGpuApi gpuApi,
   }) = _VideoPlayerSettingsModel;
 
   bool get isAudioPassthroughEnabled => passthroughCodecs.isNotEmpty;

@@ -579,20 +579,20 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                   ),
                 if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
                   SettingsListTile(
-                    label: Text(context.localized.voDriverTitle),
-                    subLabel: Text(context.localized.voDriverDesc),
+                    label: Text(context.localized.gpuApiTitle),
+                    subLabel: Text(context.localized.gpuApiDesc),
                     onTap: () async {
                       await showDialog<void>(
                         context: context,
                         builder: (context) => SimpleDialog(
-                          title: Text(context.localized.voDriverTitle),
-                          children: MpvVoDriver.values
-                              .map((v) => RadioListTile<MpvVoDriver>(
+                          title: Text(context.localized.gpuApiTitle),
+                          children: MpvGpuApi.values
+                              .map((v) => RadioListTile<MpvGpuApi>(
                                     title: Text(v.label(context)),
                                     value: v,
-                                    groupValue: videoSettings.voDriver,
+                                    groupValue: videoSettings.gpuApi,
                                     onChanged: (value) {
-                                      if (value != null) provider.setVoDriver(value);
+                                      if (value != null) provider.setGpuApi(value);
                                       Navigator.pop(context);
                                     },
                                   ))
@@ -601,7 +601,7 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                       );
                     },
                     trailing: Text(
-                      videoSettings.voDriver.label(context),
+                      videoSettings.gpuApi.label(context),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),

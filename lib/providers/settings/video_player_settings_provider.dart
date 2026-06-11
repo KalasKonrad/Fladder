@@ -210,7 +210,7 @@ class VideoPlayerSettingsProviderNotifier extends StateNotifier<VideoPlayerSetti
   void setTargetColorspaceHint(bool value) => state = state.copyWith(targetColorspaceHint: value);
   void setDemuxerMaxCacheSizeMb(int value) => state = state.copyWith(demuxerMaxCacheSizeMb: value);
   void setVideoLatencyHacks(bool value) => state = state.copyWith(videoLatencyHacks: value);
-  void setVoDriver(MpvVoDriver value) => state = state.copyWith(voDriver: value);
+  void setGpuApi(MpvGpuApi value) => state = state.copyWith(gpuApi: value);
 
   static VideoPlayerSettingsModel _sanitizeCrossfade(VideoPlayerSettingsModel value) {
     if (!value.canUseCrossfade && value.enableCrossfade) {

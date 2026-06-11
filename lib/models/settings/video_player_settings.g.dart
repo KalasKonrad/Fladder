@@ -82,8 +82,8 @@ _VideoPlayerSettingsModel _$VideoPlayerSettingsModelFromJson(
       demuxerMaxCacheSizeMb:
           (json['demuxerMaxCacheSizeMb'] as num?)?.toInt() ?? 150,
       videoLatencyHacks: json['videoLatencyHacks'] as bool? ?? false,
-      voDriver: $enumDecodeNullable(_$MpvVoDriverEnumMap, json['voDriver']) ??
-          MpvVoDriver.auto,
+      gpuApi: $enumDecodeNullable(_$MpvGpuApiEnumMap, json['gpuApi']) ??
+          MpvGpuApi.auto,
     );
 
 Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
@@ -135,7 +135,7 @@ Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
       'targetColorspaceHint': instance.targetColorspaceHint,
       'demuxerMaxCacheSizeMb': instance.demuxerMaxCacheSizeMb,
       'videoLatencyHacks': instance.videoLatencyHacks,
-      'voDriver': _$MpvVoDriverEnumMap[instance.voDriver]!,
+      'gpuApi': _$MpvGpuApiEnumMap[instance.gpuApi]!,
     };
 
 const _$BoxFitEnumMap = {
@@ -277,8 +277,8 @@ const _$MpvToneMappingEnumMap = {
   MpvToneMapping.linear: 'linear',
 };
 
-const _$MpvVoDriverEnumMap = {
-  MpvVoDriver.auto: 'auto',
-  MpvVoDriver.gpuNext: 'gpuNext',
-  MpvVoDriver.gpu: 'gpu',
+const _$MpvGpuApiEnumMap = {
+  MpvGpuApi.auto: 'auto',
+  MpvGpuApi.opengl: 'opengl',
+  MpvGpuApi.vulkan: 'vulkan',
 };
