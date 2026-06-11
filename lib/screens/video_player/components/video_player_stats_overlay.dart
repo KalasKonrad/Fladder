@@ -184,7 +184,7 @@ class _VideoPlayerStatsOverlayState extends ConsumerState<VideoPlayerStatsOverla
   Future<_GpuStats?> _readGpuSysfs() async {
     try {
       final cards = Directory('/sys/class/drm')
-          .listSync()
+          .listSync(followLinks: false)
           .whereType<Link>()
           .where((e) => RegExp(r'card\d+$').hasMatch(e.path.split('/').last))
           .map((e) => e.path)
