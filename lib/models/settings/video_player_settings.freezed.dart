@@ -52,6 +52,8 @@ mixin _$VideoPlayerSettingsModel implements DiagnosticableTreeMixin {
   MpvToneMapping get toneMapping;
   bool get targetColorspaceHint;
   int get demuxerMaxCacheSizeMb;
+  bool get videoLatencyHacks;
+  MpvVoDriver get voDriver;
 
   /// Create a copy of VideoPlayerSettingsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -107,13 +109,14 @@ mixin _$VideoPlayerSettingsModel implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('tscale', tscale))
       ..add(DiagnosticsProperty('toneMapping', toneMapping))
       ..add(DiagnosticsProperty('targetColorspaceHint', targetColorspaceHint))
-      ..add(
-          DiagnosticsProperty('demuxerMaxCacheSizeMb', demuxerMaxCacheSizeMb));
+      ..add(DiagnosticsProperty('demuxerMaxCacheSizeMb', demuxerMaxCacheSizeMb))
+      ..add(DiagnosticsProperty('videoLatencyHacks', videoLatencyHacks))
+      ..add(DiagnosticsProperty('voDriver', voDriver));
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'VideoPlayerSettingsModel(screenBrightness: $screenBrightness, videoFit: $videoFit, fillScreen: $fillScreen, hardwareAccel: $hardwareAccel, useLibass: $useLibass, enableTunneling: $enableTunneling, bufferSize: $bufferSize, playerOptions: $playerOptions, internalVolume: $internalVolume, allowedOrientations: $allowedOrientations, nextVideoType: $nextVideoType, maxHomeBitrate: $maxHomeBitrate, maxInternetBitrate: $maxInternetBitrate, audioDevice: $audioDevice, segmentSkipSettings: $segmentSkipSettings, hotKeys: $hotKeys, screensaver: $screensaver, enableSpeedBoost: $enableSpeedBoost, speedBoostRate: $speedBoostRate, enableDoubleTapSeek: $enableDoubleTapSeek, enableAdvancedVideoOptions: $enableAdvancedVideoOptions, enableEdgeGestures: $enableEdgeGestures, reverseEdgeGestures: $reverseEdgeGestures, enablePictureInPicture: $enablePictureInPicture, enableReplayGain: $enableReplayGain, replayGainVolumeLevel: $replayGainVolumeLevel, enablePlayPauseFade: $enablePlayPauseFade, enableCrossfade: $enableCrossfade, crossfadeDurationMs: $crossfadeDurationMs, passthroughCodecs: $passthroughCodecs, hwdecBackend: $hwdecBackend, deinterlace: $deinterlace, videoSync: $videoSync, interpolation: $interpolation, tscale: $tscale, toneMapping: $toneMapping, targetColorspaceHint: $targetColorspaceHint, demuxerMaxCacheSizeMb: $demuxerMaxCacheSizeMb)';
+    return 'VideoPlayerSettingsModel(screenBrightness: $screenBrightness, videoFit: $videoFit, fillScreen: $fillScreen, hardwareAccel: $hardwareAccel, useLibass: $useLibass, enableTunneling: $enableTunneling, bufferSize: $bufferSize, playerOptions: $playerOptions, internalVolume: $internalVolume, allowedOrientations: $allowedOrientations, nextVideoType: $nextVideoType, maxHomeBitrate: $maxHomeBitrate, maxInternetBitrate: $maxInternetBitrate, audioDevice: $audioDevice, segmentSkipSettings: $segmentSkipSettings, hotKeys: $hotKeys, screensaver: $screensaver, enableSpeedBoost: $enableSpeedBoost, speedBoostRate: $speedBoostRate, enableDoubleTapSeek: $enableDoubleTapSeek, enableAdvancedVideoOptions: $enableAdvancedVideoOptions, enableEdgeGestures: $enableEdgeGestures, reverseEdgeGestures: $reverseEdgeGestures, enablePictureInPicture: $enablePictureInPicture, enableReplayGain: $enableReplayGain, replayGainVolumeLevel: $replayGainVolumeLevel, enablePlayPauseFade: $enablePlayPauseFade, enableCrossfade: $enableCrossfade, crossfadeDurationMs: $crossfadeDurationMs, passthroughCodecs: $passthroughCodecs, hwdecBackend: $hwdecBackend, deinterlace: $deinterlace, videoSync: $videoSync, interpolation: $interpolation, tscale: $tscale, toneMapping: $toneMapping, targetColorspaceHint: $targetColorspaceHint, demuxerMaxCacheSizeMb: $demuxerMaxCacheSizeMb, videoLatencyHacks: $videoLatencyHacks, voDriver: $voDriver)';
   }
 }
 
@@ -161,7 +164,9 @@ abstract mixin class $VideoPlayerSettingsModelCopyWith<$Res> {
       MpvTscale tscale,
       MpvToneMapping toneMapping,
       bool targetColorspaceHint,
-      int demuxerMaxCacheSizeMb});
+      int demuxerMaxCacheSizeMb,
+      bool videoLatencyHacks,
+      MpvVoDriver voDriver});
 }
 
 /// @nodoc
@@ -215,6 +220,8 @@ class _$VideoPlayerSettingsModelCopyWithImpl<$Res>
     Object? toneMapping = null,
     Object? targetColorspaceHint = null,
     Object? demuxerMaxCacheSizeMb = null,
+    Object? videoLatencyHacks = null,
+    Object? voDriver = null,
   }) {
     return _then(_self.copyWith(
       screenBrightness: freezed == screenBrightness
@@ -369,6 +376,14 @@ class _$VideoPlayerSettingsModelCopyWithImpl<$Res>
           ? _self.demuxerMaxCacheSizeMb
           : demuxerMaxCacheSizeMb // ignore: cast_nullable_to_non_nullable
               as int,
+      videoLatencyHacks: null == videoLatencyHacks
+          ? _self.videoLatencyHacks
+          : videoLatencyHacks // ignore: cast_nullable_to_non_nullable
+              as bool,
+      voDriver: null == voDriver
+          ? _self.voDriver
+          : voDriver // ignore: cast_nullable_to_non_nullable
+              as MpvVoDriver,
     ));
   }
 }
@@ -504,7 +519,9 @@ extension VideoPlayerSettingsModelPatterns on VideoPlayerSettingsModel {
             MpvTscale tscale,
             MpvToneMapping toneMapping,
             bool targetColorspaceHint,
-            int demuxerMaxCacheSizeMb)?
+            int demuxerMaxCacheSizeMb,
+            bool videoLatencyHacks,
+            MpvVoDriver voDriver)?
         $default, {
     required TResult orElse(),
   }) {
@@ -549,7 +566,9 @@ extension VideoPlayerSettingsModelPatterns on VideoPlayerSettingsModel {
             _that.tscale,
             _that.toneMapping,
             _that.targetColorspaceHint,
-            _that.demuxerMaxCacheSizeMb);
+            _that.demuxerMaxCacheSizeMb,
+            _that.videoLatencyHacks,
+            _that.voDriver);
       case _:
         return orElse();
     }
@@ -608,7 +627,9 @@ extension VideoPlayerSettingsModelPatterns on VideoPlayerSettingsModel {
             MpvTscale tscale,
             MpvToneMapping toneMapping,
             bool targetColorspaceHint,
-            int demuxerMaxCacheSizeMb)
+            int demuxerMaxCacheSizeMb,
+            bool videoLatencyHacks,
+            MpvVoDriver voDriver)
         $default,
   ) {
     final _that = this;
@@ -652,7 +673,9 @@ extension VideoPlayerSettingsModelPatterns on VideoPlayerSettingsModel {
             _that.tscale,
             _that.toneMapping,
             _that.targetColorspaceHint,
-            _that.demuxerMaxCacheSizeMb);
+            _that.demuxerMaxCacheSizeMb,
+            _that.videoLatencyHacks,
+            _that.voDriver);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -710,7 +733,9 @@ extension VideoPlayerSettingsModelPatterns on VideoPlayerSettingsModel {
             MpvTscale tscale,
             MpvToneMapping toneMapping,
             bool targetColorspaceHint,
-            int demuxerMaxCacheSizeMb)?
+            int demuxerMaxCacheSizeMb,
+            bool videoLatencyHacks,
+            MpvVoDriver voDriver)?
         $default,
   ) {
     final _that = this;
@@ -754,7 +779,9 @@ extension VideoPlayerSettingsModelPatterns on VideoPlayerSettingsModel {
             _that.tscale,
             _that.toneMapping,
             _that.targetColorspaceHint,
-            _that.demuxerMaxCacheSizeMb);
+            _that.demuxerMaxCacheSizeMb,
+            _that.videoLatencyHacks,
+            _that.voDriver);
       case _:
         return null;
     }
@@ -805,7 +832,9 @@ class _VideoPlayerSettingsModel extends VideoPlayerSettingsModel
       this.tscale = MpvTscale.oversample,
       this.toneMapping = MpvToneMapping.auto,
       this.targetColorspaceHint = false,
-      this.demuxerMaxCacheSizeMb = 150})
+      this.demuxerMaxCacheSizeMb = 150,
+      this.videoLatencyHacks = false,
+      this.voDriver = MpvVoDriver.auto})
       : _allowedOrientations = allowedOrientations,
         _segmentSkipSettings = segmentSkipSettings,
         _hotKeys = hotKeys,
@@ -952,6 +981,12 @@ class _VideoPlayerSettingsModel extends VideoPlayerSettingsModel
   @override
   @JsonKey()
   final int demuxerMaxCacheSizeMb;
+  @override
+  @JsonKey()
+  final bool videoLatencyHacks;
+  @override
+  @JsonKey()
+  final MpvVoDriver voDriver;
 
   /// Create a copy of VideoPlayerSettingsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -1012,13 +1047,14 @@ class _VideoPlayerSettingsModel extends VideoPlayerSettingsModel
       ..add(DiagnosticsProperty('tscale', tscale))
       ..add(DiagnosticsProperty('toneMapping', toneMapping))
       ..add(DiagnosticsProperty('targetColorspaceHint', targetColorspaceHint))
-      ..add(
-          DiagnosticsProperty('demuxerMaxCacheSizeMb', demuxerMaxCacheSizeMb));
+      ..add(DiagnosticsProperty('demuxerMaxCacheSizeMb', demuxerMaxCacheSizeMb))
+      ..add(DiagnosticsProperty('videoLatencyHacks', videoLatencyHacks))
+      ..add(DiagnosticsProperty('voDriver', voDriver));
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'VideoPlayerSettingsModel(screenBrightness: $screenBrightness, videoFit: $videoFit, fillScreen: $fillScreen, hardwareAccel: $hardwareAccel, useLibass: $useLibass, enableTunneling: $enableTunneling, bufferSize: $bufferSize, playerOptions: $playerOptions, internalVolume: $internalVolume, allowedOrientations: $allowedOrientations, nextVideoType: $nextVideoType, maxHomeBitrate: $maxHomeBitrate, maxInternetBitrate: $maxInternetBitrate, audioDevice: $audioDevice, segmentSkipSettings: $segmentSkipSettings, hotKeys: $hotKeys, screensaver: $screensaver, enableSpeedBoost: $enableSpeedBoost, speedBoostRate: $speedBoostRate, enableDoubleTapSeek: $enableDoubleTapSeek, enableAdvancedVideoOptions: $enableAdvancedVideoOptions, enableEdgeGestures: $enableEdgeGestures, reverseEdgeGestures: $reverseEdgeGestures, enablePictureInPicture: $enablePictureInPicture, enableReplayGain: $enableReplayGain, replayGainVolumeLevel: $replayGainVolumeLevel, enablePlayPauseFade: $enablePlayPauseFade, enableCrossfade: $enableCrossfade, crossfadeDurationMs: $crossfadeDurationMs, passthroughCodecs: $passthroughCodecs, hwdecBackend: $hwdecBackend, deinterlace: $deinterlace, videoSync: $videoSync, interpolation: $interpolation, tscale: $tscale, toneMapping: $toneMapping, targetColorspaceHint: $targetColorspaceHint, demuxerMaxCacheSizeMb: $demuxerMaxCacheSizeMb)';
+    return 'VideoPlayerSettingsModel(screenBrightness: $screenBrightness, videoFit: $videoFit, fillScreen: $fillScreen, hardwareAccel: $hardwareAccel, useLibass: $useLibass, enableTunneling: $enableTunneling, bufferSize: $bufferSize, playerOptions: $playerOptions, internalVolume: $internalVolume, allowedOrientations: $allowedOrientations, nextVideoType: $nextVideoType, maxHomeBitrate: $maxHomeBitrate, maxInternetBitrate: $maxInternetBitrate, audioDevice: $audioDevice, segmentSkipSettings: $segmentSkipSettings, hotKeys: $hotKeys, screensaver: $screensaver, enableSpeedBoost: $enableSpeedBoost, speedBoostRate: $speedBoostRate, enableDoubleTapSeek: $enableDoubleTapSeek, enableAdvancedVideoOptions: $enableAdvancedVideoOptions, enableEdgeGestures: $enableEdgeGestures, reverseEdgeGestures: $reverseEdgeGestures, enablePictureInPicture: $enablePictureInPicture, enableReplayGain: $enableReplayGain, replayGainVolumeLevel: $replayGainVolumeLevel, enablePlayPauseFade: $enablePlayPauseFade, enableCrossfade: $enableCrossfade, crossfadeDurationMs: $crossfadeDurationMs, passthroughCodecs: $passthroughCodecs, hwdecBackend: $hwdecBackend, deinterlace: $deinterlace, videoSync: $videoSync, interpolation: $interpolation, tscale: $tscale, toneMapping: $toneMapping, targetColorspaceHint: $targetColorspaceHint, demuxerMaxCacheSizeMb: $demuxerMaxCacheSizeMb, videoLatencyHacks: $videoLatencyHacks, voDriver: $voDriver)';
   }
 }
 
@@ -1068,7 +1104,9 @@ abstract mixin class _$VideoPlayerSettingsModelCopyWith<$Res>
       MpvTscale tscale,
       MpvToneMapping toneMapping,
       bool targetColorspaceHint,
-      int demuxerMaxCacheSizeMb});
+      int demuxerMaxCacheSizeMb,
+      bool videoLatencyHacks,
+      MpvVoDriver voDriver});
 }
 
 /// @nodoc
@@ -1122,6 +1160,8 @@ class __$VideoPlayerSettingsModelCopyWithImpl<$Res>
     Object? toneMapping = null,
     Object? targetColorspaceHint = null,
     Object? demuxerMaxCacheSizeMb = null,
+    Object? videoLatencyHacks = null,
+    Object? voDriver = null,
   }) {
     return _then(_VideoPlayerSettingsModel(
       screenBrightness: freezed == screenBrightness
@@ -1276,6 +1316,14 @@ class __$VideoPlayerSettingsModelCopyWithImpl<$Res>
           ? _self.demuxerMaxCacheSizeMb
           : demuxerMaxCacheSizeMb // ignore: cast_nullable_to_non_nullable
               as int,
+      videoLatencyHacks: null == videoLatencyHacks
+          ? _self.videoLatencyHacks
+          : videoLatencyHacks // ignore: cast_nullable_to_non_nullable
+              as bool,
+      voDriver: null == voDriver
+          ? _self.voDriver
+          : voDriver // ignore: cast_nullable_to_non_nullable
+              as MpvVoDriver,
     ));
   }
 }

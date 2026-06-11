@@ -81,6 +81,9 @@ _VideoPlayerSettingsModel _$VideoPlayerSettingsModelFromJson(
       targetColorspaceHint: json['targetColorspaceHint'] as bool? ?? false,
       demuxerMaxCacheSizeMb:
           (json['demuxerMaxCacheSizeMb'] as num?)?.toInt() ?? 150,
+      videoLatencyHacks: json['videoLatencyHacks'] as bool? ?? false,
+      voDriver: $enumDecodeNullable(_$MpvVoDriverEnumMap, json['voDriver']) ??
+          MpvVoDriver.auto,
     );
 
 Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
@@ -131,6 +134,8 @@ Map<String, dynamic> _$VideoPlayerSettingsModelToJson(
       'toneMapping': _$MpvToneMappingEnumMap[instance.toneMapping]!,
       'targetColorspaceHint': instance.targetColorspaceHint,
       'demuxerMaxCacheSizeMb': instance.demuxerMaxCacheSizeMb,
+      'videoLatencyHacks': instance.videoLatencyHacks,
+      'voDriver': _$MpvVoDriverEnumMap[instance.voDriver]!,
     };
 
 const _$BoxFitEnumMap = {
@@ -270,4 +275,10 @@ const _$MpvToneMappingEnumMap = {
   MpvToneMapping.bt2390: 'bt2390',
   MpvToneMapping.gamma: 'gamma',
   MpvToneMapping.linear: 'linear',
+};
+
+const _$MpvVoDriverEnumMap = {
+  MpvVoDriver.auto: 'auto',
+  MpvVoDriver.gpuNext: 'gpuNext',
+  MpvVoDriver.gpu: 'gpu',
 };

@@ -567,6 +567,44 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.videoLatencyHacksTitle),
+                    subLabel: Text(context.localized.videoLatencyHacksDesc),
+                    onTap: () => provider.setVideoLatencyHacks(!videoSettings.videoLatencyHacks),
+                    trailing: Switch(
+                      value: videoSettings.videoLatencyHacks,
+                      onChanged: (value) => provider.setVideoLatencyHacks(value),
+                    ),
+                  ),
+                if (VideoPlayerSettingsModel.passthroughSupportedOnCurrentPlatform)
+                  SettingsListTile(
+                    label: Text(context.localized.voDriverTitle),
+                    subLabel: Text(context.localized.voDriverDesc),
+                    onTap: () async {
+                      await showDialog<void>(
+                        context: context,
+                        builder: (context) => SimpleDialog(
+                          title: Text(context.localized.voDriverTitle),
+                          children: MpvVoDriver.values
+                              .map((v) => RadioListTile<MpvVoDriver>(
+                                    title: Text(v.label(context)),
+                                    value: v,
+                                    groupValue: videoSettings.voDriver,
+                                    onChanged: (value) {
+                                      if (value != null) provider.setVoDriver(value);
+                                      Navigator.pop(context);
+                                    },
+                                  ))
+                              .toList(),
+                        ),
+                      );
+                    },
+                    trailing: Text(
+                      videoSettings.voDriver.label(context),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
                 if (!kIsWeb)
                   SettingsListTile(
                     label: Text(context.localized.settingsPlayerNativeLibassAccelTitle),

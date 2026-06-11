@@ -99,6 +99,9 @@ class LibMPV extends BasePlayer {
         await nativePlayer.setProperty('tone-mapping', settings.toneMapping.mpvValue);
         await nativePlayer.setProperty('target-colorspace-hint', settings.targetColorspaceHint ? 'yes' : 'no');
         await nativePlayer.setProperty('demuxer-max-cache-size', '${settings.demuxerMaxCacheSizeMb}MiB');
+        await nativePlayer.setProperty('video-latency-hacks', settings.videoLatencyHacks ? 'yes' : 'no');
+        final voValue = settings.voDriver.mpvValue;
+        if (voValue != null) await nativePlayer.setProperty('vo', voValue);
       }
     }
 
@@ -222,6 +225,9 @@ class LibMPV extends BasePlayer {
         await native.setProperty('tone-mapping', _settings.toneMapping.mpvValue);
         await native.setProperty('target-colorspace-hint', _settings.targetColorspaceHint ? 'yes' : 'no');
         await native.setProperty('demuxer-max-cache-size', '${_settings.demuxerMaxCacheSizeMb}MiB');
+        await native.setProperty('video-latency-hacks', _settings.videoLatencyHacks ? 'yes' : 'no');
+        final voValue = _settings.voDriver.mpvValue;
+        if (voValue != null) await native.setProperty('vo', voValue);
       }
       await native.setProperty('start', '${startPosition.inMilliseconds / 1000}');
     }
