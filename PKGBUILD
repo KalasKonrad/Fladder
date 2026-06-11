@@ -20,7 +20,7 @@ prepare() {
 
 build() {
     cd "$srcdir/$pkgname"
-    fvm flutter build linux --release
+    CMAKE_BUILD_PARALLEL_LEVEL=$(nproc) fvm flutter build linux --release
 }
 
 package() {
