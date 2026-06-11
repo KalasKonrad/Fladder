@@ -429,6 +429,7 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                     label: Text(context.localized.videoSyncTitle),
                     subLabel: Text(context.localized.videoSyncDesc),
                     onTap: () async {
+                      final passthroughActive = videoSettings.isAudioPassthroughEnabled;
                       await showDialog<void>(
                         context: context,
                         builder: (context) => SimpleDialog(
@@ -436,6 +437,15 @@ class _PlayerSettingsPageState extends ConsumerState<PlayerSettingsPage> {
                           children: MpvVideoSync.values
                               .map((v) => RadioListTile<MpvVideoSync>(
                                     title: Text(v.label(context)),
+                                    subtitle: passthroughActive && v == MpvVideoSync.displayResample
+                                        ? Text(
+                                            'Incompatible with audio passthrough — has no effect',
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.error,
+                                              fontSize: 11,
+                                            ),
+                                          )
+                                        : null,
                                     value: v,
                                     groupValue: videoSettings.videoSync,
                                     onChanged: (value) {
