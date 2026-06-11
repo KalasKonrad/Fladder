@@ -1443,7 +1443,7 @@
   "@deinterlaceDesc": {},
   "videoSyncTitle": "Video sync mode",
   "@videoSyncTitle": {},
-  "videoSyncDesc": "How video frames are synced to audio and display refresh rate. Takes effect on next playback.",
+  "videoSyncDesc": "How video frames are synced to audio and display refresh rate. If playback feels choppy with no dropped frames (common on NVIDIA legacy drivers on Wayland), try display-vdrop. Note: display-resample is incompatible with audio passthrough. Takes effect on next playback.",
   "@videoSyncDesc": {},
   "interpolationTitle": "Motion interpolation",
   "@interpolationTitle": {},
