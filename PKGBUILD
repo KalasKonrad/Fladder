@@ -41,6 +41,7 @@ EOF
     install -Dm644 flatpak/Fladder.desktop "$pkgdir/usr/share/applications/$pkgname.desktop"
     sed -i "s/^Name=.*/Name=Fladder (Dev)/" "$pkgdir/usr/share/applications/$pkgname.desktop"
     sed -i "s/^Exec=.*/Exec=$pkgname/" "$pkgdir/usr/share/applications/$pkgname.desktop"
+    sed -i "s/^Icon=.*/Icon=$pkgname/" "$pkgdir/usr/share/applications/$pkgname.desktop"
 
     install -Dm644 icons/production/fladder_icon_512.png \
         "$pkgdir/usr/share/pixmaps/$pkgname.png"
