@@ -9,6 +9,7 @@ url="https://github.com/KalasKonrad/Fladder"
 license=('GPL-3.0-only')
 depends=('gtk3' 'mpv')
 makedepends=('fvm' 'clang' 'cmake' 'ninja' 'pkgconf')
+options=('!debug')
 source=("$pkgname::git+https://github.com/KalasKonrad/Fladder.git#branch=develop")
 sha256sums=('SKIP')
 
